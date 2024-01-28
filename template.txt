@@ -1,6 +1,6 @@
 
   - name: "LONGNAME Battery Voltage"
-    unique_id: "SHORTNAME_battery_voltage"
+    unique_id: "SENSOR_PREFIXSHORTNAME_battery_voltage"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
@@ -9,88 +9,88 @@
             value_json.payload.temperature is not defined %}
         {{ (value_json.payload.voltage | float) | round(2) }}
       {% else %}
-       {{ states('sensor.LONGNAME_battery_voltage') }}
+       {{ states('sensor.SENSOR_PREFIXSHORTNAME_battery_voltage') }}
       {% endif %}
     unit_of_measurement: "Volts"
 
   - name: "LONGNAME Battery Percent"
-    unique_id: "SHORTNAME_battery_percent"
+    unique_id: "SENSOR_PREFIXSHORTNAME_battery_percent"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.battery_level is defined %}
         {{ (value_json.payload.battery_level | float) | round(2) }}
       {% else %}
-        {{ states('sensor.LONGNAME_battery_percent') }}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_battery_percent') }}
       {% endif %}
     unit_of_measurement: "%"
 
   - name: "LONGNAME ChUtil"
-    unique_id: "SHORTNAME_chutil"
+    unique_id: "SENSOR_PREFIXSHORTNAME_chutil"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.channel_utilization is defined %}
         {{ (value_json.payload.channel_utilization | float) | round(2) }}
       {% else %}
-        {{ states('sensor.LONGNAME_chutil') }}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_chutil') }}
       {% endif %}
     unit_of_measurement: "%"
 
   - name: "LONGNAME AirUtilTX"
-    unique_id: "SHORTNAME_airutiltx"
+    unique_id: "SENSOR_PREFIXSHORTNAME_airutiltx"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.air_util_tx is defined %}
         {{ (value_json.payload.air_util_tx | float) | round(2) }}
       {% else %}
-        {{ states('sensor.LONGNAME_airutiltx') }}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_airutiltx') }}
       {% endif %}
     unit_of_measurement: "%"
 
   - name: "LONGNAME Messages"
-    unique_id: "SHORTNAME_messages"
+    unique_id: "SENSOR_PREFIXSHORTNAME_messages"
     state_topic: "MQTT_TOPIC"
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.text is defined %}
         {{ value_json.payload.text }}
       {% else %}
-        {{ states('sensor.SHORTNAME_messages') }}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_messages') }}
       {% endif %}
 
   - name: "LONGNAME Altitude"
-    unique_id: "SHORTNAME_altitude"
+    unique_id: "SENSOR_PREFIXSHORTNAME_altitude"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.altitude is defined %}
         {{ (value_json.payload.altitude | float) | round(2) }}
       {% else %}
-        {{ states('sensor.LONGNAME_altitude') }}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_altitude') }}
       {% endif %}
     unit_of_measurement: "ALTITUDEMEASUREMENT"
 
   - name: "LONGNAME Latitude"
-    unique_id: "SHORTNAME_latitude"
+    unique_id: "SENSOR_PREFIXSHORTNAME_latitude"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.latitude_i is defined %}
         {{ (value_json.payload.latitude_i / 1000000000 | float) | round(8) }}
       {% else %}
-        {{ states('sensor.LONGNAME_latitude') }}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_latitude') }}
       {% endif %}
     unit_of_measurement: "Minutes"
 
   - name: "LONGNAME Longitude"
-    unique_id: "SHORTNAME_longitude"
+    unique_id: "SENSOR_PREFIXSHORTNAME_longitude"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.longitude_i is defined %}
         {{ (value_json.payload.longitude_i / 1000000000 | float) | round(8) }}
       {% else %}
-        {{ states('sensor.LONGNAME_longitude') }}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_longitude') }}
       {% endif %}
     unit_of_measurement: "Minutes"

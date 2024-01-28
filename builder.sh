@@ -4,6 +4,7 @@
 # eg: /msh/2/json/LongFast/!f71e2dac
 MQTTTOPIC='meshtastic\/2\/json\/LongFast\/\!f71e2dac'
 ALTITUDEMEASUREMENT='M'
+SENSOR_PREFIX='msh_'
 
 longnames=('Basestation' 'TBeam_02' 'RR_2c4d' 'Heltecv3_75f0' 'Meshtastic_1f88' 'Heltecv3_6610' 'Techo_77cf')
 shortnames=('base' 'tb02' 'rr' 'ht01' '1f88' 'ht02' 'jb')
@@ -23,4 +24,5 @@ cat *.yaml >> consolidated.tmp
 rm -f *.yaml
 sed -i '' "s/MQTT_TOPIC/$MQTTTOPIC/g" consolidated.tmp
 sed -i '' "s/ALTITUDEMEASUREMENT/$ALTITUDEMEASUREMENT/g" consolidated.tmp
+sed -i '' "s/SENSOR_PREFIX/$SENSOR_PREFIX/g" consolidated.tmp
 mv consolidated.tmp consolidated.yaml
