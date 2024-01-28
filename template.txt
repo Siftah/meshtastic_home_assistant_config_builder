@@ -1,49 +1,96 @@
-  - name: "Basestation Battery Voltage"
-    unique_id: "base_battery_voltage"
-    state_topic: "meshtastic/2/json/LongFast/!f246bc1c"
+
+  - name: "LONGNAME Battery Voltage"
+    unique_id: "SHORTNAME_battery_voltage"
+    state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
-      {% if value_json.from == 4064721948 and
+      {% if value_json.from == STATIONID and
             value_json.payload.voltage is defined and
             value_json.payload.temperature is not defined %}
         {{ (value_json.payload.voltage | float) | round(2) }}
       {% else %}
-       {{ states('sensor.basestation_battery_voltage') }}
+       {{ states('sensor.LONGNAME_battery_voltage') }}
       {% endif %}
     unit_of_measurement: "Volts"
 
-  - name: "Basestation Battery Percent"
-    unique_id: "base_battery_percent"
-    state_topic: "meshtastic/2/json/LongFast/!f246bc1c"
+  - name: "LONGNAME Battery Percent"
+    unique_id: "SHORTNAME_battery_percent"
+    state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
-      {% if value_json.from == 4064721948 and value_json.payload.battery_level is defined %}
+      {% if value_json.from == STATIONID and value_json.payload.battery_level is defined %}
         {{ (value_json.payload.battery_level | float) | round(2) }}
       {% else %}
-        {{ states('sensor.basestation_battery_percent') }}
+        {{ states('sensor.LONGNAME_battery_percent') }}
       {% endif %}
     unit_of_measurement: "%"
 
-  - name: "Basestation ChUtil"
-    unique_id: "base_chutil"
-    state_topic: "meshtastic/2/json/LongFast/!f246bc1c"
+  - name: "LONGNAME ChUtil"
+    unique_id: "SHORTNAME_chutil"
+    state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
-      {% if value_json.from == 4064721948 and value_json.payload.channel_utilization is defined %}
+      {% if value_json.from == STATIONID and value_json.payload.channel_utilization is defined %}
         {{ (value_json.payload.channel_utilization | float) | round(2) }}
       {% else %}
-        {{ states('sensor.basestation_chutil') }}
+        {{ states('sensor.LONGNAME_chutil') }}
       {% endif %}
     unit_of_measurement: "%"
 
-  - name: "Basestation AirUtilTX"
-    unique_id: "base_airutiltx"
-    state_topic: "meshtastic/2/json/LongFast/!f246bc1c"
+  - name: "LONGNAME AirUtilTX"
+    unique_id: "SHORTNAME_airutiltx"
+    state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
-      {% if value_json.from == 4064721948 and value_json.payload.air_util_tx is defined %}
+      {% if value_json.from == STATIONID and value_json.payload.air_util_tx is defined %}
         {{ (value_json.payload.air_util_tx | float) | round(2) }}
       {% else %}
-        {{ states('sensor.basestation_airutiltx') }}
+        {{ states('sensor.LONGNAME_airutiltx') }}
       {% endif %}
     unit_of_measurement: "%"
+
+  - name: "LONGNAME Messages"
+    unique_id: "SHORTNAME_messages"
+    state_topic: "MQTT_TOPIC"
+    value_template: >-
+      {% if value_json.from == STATIONID and value_json.payload.text is defined %}
+        {{ value_json.payload.text }}
+      {% else %}
+        {{ states('sensor.SHORTNAME_messages') }}
+      {% endif %}
+
+  - name: "LONGNAME Altitude"
+    unique_id: "SHORTNAME_altitude"
+    state_topic: "MQTT_TOPIC"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == STATIONID and value_json.payload.altitude is defined %}
+        {{ (value_json.payload.altitude | float) | round(2) }}
+      {% else %}
+        {{ states('sensor.LONGNAME_altitude') }}
+      {% endif %}
+    unit_of_measurement: "ALTITUDEMEASUREMENT"
+
+  - name: "LONGNAME Latitude"
+    unique_id: "SHORTNAME_latitude"
+    state_topic: "MQTT_TOPIC"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == STATIONID and value_json.payload.latitude_i is defined %}
+        {{ (value_json.payload.latitude_i / 1000000000 | float) | round(8) }}
+      {% else %}
+        {{ states('sensor.LONGNAME_latitude') }}
+      {% endif %}
+    unit_of_measurement: "Minutes"
+
+  - name: "LONGNAME Longitude"
+    unique_id: "SHORTNAME_longitude"
+    state_topic: "MQTT_TOPIC"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == STATIONID and value_json.payload.longitude_i is defined %}
+        {{ (value_json.payload.longitude_i / 1000000000 | float) | round(8) }}
+      {% else %}
+        {{ states('sensor.LONGNAME_longitude') }}
+      {% endif %}
+    unit_of_measurement: "Minutes"
