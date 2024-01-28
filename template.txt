@@ -77,7 +77,7 @@
     state_class: measurement
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.latitude_i is defined %}
-        {{ (value_json.payload.latitude_i / 10000000 | float) | round(8) }}
+        {{ (value_json.payload.latitude_i / 1e+7 | float) | round(8) }}
       {% else %}
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_latitude') }}
       {% endif %}
@@ -89,7 +89,7 @@
     state_class: measurement
     value_template: >-
       {% if value_json.from == STATIONID and value_json.payload.longitude_i is defined %}
-        {{ (value_json.payload.longitude_i / 10000000 | float) | round(8) }}
+        {{ (value_json.payload.longitude_i / 1e+7 | float) | round(8) }}
       {% else %}
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_longitude') }}
       {% endif %}
