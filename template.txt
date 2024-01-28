@@ -1,0 +1,49 @@
+  - name: "Basestation Battery Voltage"
+    unique_id: "base_battery_voltage"
+    state_topic: "meshtastic/2/json/LongFast/!f246bc1c"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4064721948 and
+            value_json.payload.voltage is defined and
+            value_json.payload.temperature is not defined %}
+        {{ (value_json.payload.voltage | float) | round(2) }}
+      {% else %}
+       {{ states('sensor.basestation_battery_voltage') }}
+      {% endif %}
+    unit_of_measurement: "Volts"
+
+  - name: "Basestation Battery Percent"
+    unique_id: "base_battery_percent"
+    state_topic: "meshtastic/2/json/LongFast/!f246bc1c"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4064721948 and value_json.payload.battery_level is defined %}
+        {{ (value_json.payload.battery_level | float) | round(2) }}
+      {% else %}
+        {{ states('sensor.basestation_battery_percent') }}
+      {% endif %}
+    unit_of_measurement: "%"
+
+  - name: "Basestation ChUtil"
+    unique_id: "base_chutil"
+    state_topic: "meshtastic/2/json/LongFast/!f246bc1c"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4064721948 and value_json.payload.channel_utilization is defined %}
+        {{ (value_json.payload.channel_utilization | float) | round(2) }}
+      {% else %}
+        {{ states('sensor.basestation_chutil') }}
+      {% endif %}
+    unit_of_measurement: "%"
+
+  - name: "Basestation AirUtilTX"
+    unique_id: "base_airutiltx"
+    state_topic: "meshtastic/2/json/LongFast/!f246bc1c"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4064721948 and value_json.payload.air_util_tx is defined %}
+        {{ (value_json.payload.air_util_tx | float) | round(2) }}
+      {% else %}
+        {{ states('sensor.basestation_airutiltx') }}
+      {% endif %}
+    unit_of_measurement: "%"
