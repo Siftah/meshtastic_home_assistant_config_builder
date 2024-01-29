@@ -1,6 +1,7 @@
-
   - name: "LONGNAME Battery Voltage"
+    device_class: voltage
     unique_id: "SENSOR_PREFIXSHORTNAME_battery_voltage"
+    object_id: "SENSOR_PREFIXSHORTNAME_battery_voltage"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
@@ -11,10 +12,12 @@
       {% else %}
        {{ states('sensor.SENSOR_PREFIXSHORTNAME_battery_voltage') }}
       {% endif %}
-    unit_of_measurement: "Volts"
+    unit_of_measurement: "V"
 
   - name: "LONGNAME Battery Percent"
+    device_class: battery
     unique_id: "SENSOR_PREFIXSHORTNAME_battery_percent"
+    object_id: "SENSOR_PREFIXSHORTNAME_battery_percent"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
@@ -27,6 +30,7 @@
 
   - name: "LONGNAME ChUtil"
     unique_id: "SENSOR_PREFIXSHORTNAME_chutil"
+    object_id: "SENSOR_PREFIXSHORTNAME_chutil"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
@@ -39,6 +43,7 @@
 
   - name: "LONGNAME AirUtilTX"
     unique_id: "SENSOR_PREFIXSHORTNAME_airutiltx"
+    object_id: "SENSOR_PREFIXSHORTNAME_airutiltx"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
@@ -51,9 +56,10 @@
 
   - name: "LONGNAME Messages"
     unique_id: "SENSOR_PREFIXSHORTNAME_messages"
+    object_id: "SENSOR_PREFIXSHORTNAME_messages"
     state_topic: "MQTT_TOPIC"
     value_template: >-
-      {% if value_json.from == STATIONID and value_json.payload.text is defined %}
+      {% if value_json.from == STATIONID and value_json.payload.text is defined and value_json.type == "text" %}
         {{ value_json.payload.text }}
       {% else %}
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_messages') }}
@@ -61,6 +67,7 @@
 
   - name: "LONGNAME Altitude"
     unique_id: "SENSOR_PREFIXSHORTNAME_altitude"
+    object_id: "SENSOR_PREFIXSHORTNAME_altitude"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
@@ -73,6 +80,7 @@
 
   - name: "LONGNAME Latitude"
     unique_id: "SENSOR_PREFIXSHORTNAME_latitude"
+    object_id: "SENSOR_PREFIXSHORTNAME_latitude"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
@@ -85,6 +93,7 @@
 
   - name: "LONGNAME Longitude"
     unique_id: "SENSOR_PREFIXSHORTNAME_longitude"
+    object_id: "SENSOR_PREFIXSHORTNAME_longitude"
     state_topic: "MQTT_TOPIC"
     state_class: measurement
     value_template: >-
@@ -94,3 +103,44 @@
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_longitude') }}
       {% endif %}
     unit_of_measurement: "Minutes"
+
+  - name: "LONGNAME RSSI"
+    device_class: signal_strength
+    unique_id: "SENSOR_PREFIXSHORTNAME_rssi"
+    object_id: "SENSOR_PREFIXSHORTNAME_rssi"
+    state_topic: "MQTT_TOPIC"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == STATIONID and value_json.rssi is defined %}
+        {{ (value_json.rssi|int) }}
+      {% else %}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_rssi') }}
+      {% endif %}
+    unit_of_measurement: "dBm"
+
+  - name: "LONGNAME SNR"
+    device_class: signal_strength
+    unique_id: "SENSOR_PREFIXSHORTNAME_snr"
+    object_id: "SENSOR_PREFIXSHORTNAME_snr"
+    state_topic: "MQTT_TOPIC"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == STATIONID and value_json.snr is defined %}
+        {{ (value_json.snr|float) }}
+      {% else %}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_snr') }}
+      {% endif %}
+    unit_of_measurement: "dB"
+
+  - name: "LONGNAME Telemetry"
+    unique_id: "SENSOR_PREFIXSHORTNAME_telemetry"
+    object_id: "SENSOR_PREFIXSHORTNAME_telemetry"
+    state_topic: "MQTT_TOPIC"
+    json_attributes_topic: "MQTT_TOPIC"
+    value_template: >-
+      {% if value_json.from == STATIONID and value_json.type == telemetry %}
+        {{ (value_json.timestamp|float) }}
+      {% else %}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_telemetry') }}
+      {% endif %}
+    unit_of_measurement: "timestamp"
