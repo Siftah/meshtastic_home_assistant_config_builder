@@ -144,5 +144,9 @@
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_telemetry') }}
       {% endif %}
     json_attributes_template: >-
-      {{ value_json.payload }}
+      {% if value_json.from == STATIONID and value_json.type == "telemetry" %}
+        {{ value_json.payload }}
+      {% else %}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME_telemetry') }}
+      {% endif %}
     unit_of_measurement: "timestamp"
