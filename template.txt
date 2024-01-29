@@ -143,4 +143,6 @@
       {% else %}
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_telemetry') }}
       {% endif %}
+    json_attributes_template: >-
+      {{ value_json.payload }}
     unit_of_measurement: "timestamp"
