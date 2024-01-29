@@ -138,7 +138,7 @@
     state_topic: "MQTT_TOPIC"
     json_attributes_topic: "MQTT_TOPIC"
     value_template: >-
-      {% if value_json.from == STATIONID and value_json.type == telemetry %}
+      {% if value_json.from == STATIONID and value_json.type == "telemetry" %}
         {{ (value_json.timestamp|float) }}
       {% else %}
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_telemetry') }}
