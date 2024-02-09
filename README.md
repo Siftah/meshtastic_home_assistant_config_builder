@@ -1,8 +1,8 @@
 Bash script that will take an array of config and create a .yaml of configuration for Home Assistant from your Meshtastic nodes.
 
 Two files are created;
-consolidate_mqtt.yaml - containing the entities needed to be added to your mqtt config.
-consolidated_automations.yaml - with automations to update the lat/lon of nodes in a device_tracker.
+`consolidated_mqtt.yaml` - containing the entities needed to be added to your mqtt config.
+`consolidated_automations.yaml` - with automations to update the lat/lon of nodes in a device_tracker.
 
 You will need to edit a number of lines in the config.sh before running the builder script from the command line with `./builder.sh`
 
