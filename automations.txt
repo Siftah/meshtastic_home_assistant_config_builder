@@ -1,0 +1,21 @@
+- id: 'UNIQUEID'
+  alias: 'Meshtastic: Device Tracker SHORTNAME'
+  description: 'Update device tracker for SHORTNAME'
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.msh_SHORTNAME_latitude
+  - platform: state
+    entity_id:
+    - sensor.msh_SHORTNAME_longitude
+  condition: []
+  action:
+  - service: device_tracker.see
+    metadata: {}
+    data:
+      dev_id: SENSOR_PREFIXSHORTNAME
+      gps:
+      - '{{ states(''sensor.SENSOR_PREFIXSHORTNAME_latitude'')|float }}'
+      - '{{ states(''sensor.SENSOR_PREFIXSHORTNAME_longitude'')|float }}'
+      battery: '{{ states(''sensor.SENSOR_PREFIXSHORTNAME_battery_percent'')|float }}'
+  mode: single
