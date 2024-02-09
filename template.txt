@@ -139,14 +139,27 @@
     json_attributes_topic: "MQTT_TOPIC"
     value_template: >-
       {% if value_json.from == STATIONID and value_json.type == "telemetry" %}
-        {{ (value_json.timestamp|float) }}
+        {{ (value_json.timestamp|int) }}
       {% else %}
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_telemetry') }}
       {% endif %}
     json_attributes_template: >-
       {% if value_json.from == STATIONID and value_json.type == "telemetry" %}
-        {{ value_json.payload }}
+        {{ value_json.payload | tojson }}
       {% else %}
         {{ states('sensor.SENSOR_PREFIXSHORTNAME_telemetry') }}
       {% endif %}
     unit_of_measurement: "timestamp"
+
+  - name: "LONGNAME"
+    unique_id: "SENSOR_PREFIXSHORTNAME"
+    object_id: "SENSOR_PREFIXSHORTNAME"
+    state_topic: "MQTT_TOPIC"
+    json_attributes_topic: "MQTT_TOPIC"
+    json_attributes_template: >-
+      {% if value_json.from == STATIONID and value_json.type == "position" %}
+        {{ value_json | tojson }}
+      {% else %}
+        {{ states('sensor.SENSOR_PREFIXSHORTNAME') }}
+      {% endif %}
+
