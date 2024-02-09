@@ -1,4 +1,12 @@
 #!/bin/bash
+
+if [ "$(uname)" == "Darwin" ]; then
+    SEDCOMMAND="sed -i '' "        
+else
+	SEDCOMMAND="sed -i "
+fi
+
+
 TIMESTAMP=`date +%Y%m%d%H%M%S`
 source config.sh
 
