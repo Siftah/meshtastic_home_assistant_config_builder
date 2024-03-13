@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$(uname)" == "Darwin" ]; then
-    SEDCOMMAND="sed -i '' "        
+    SEDCOMMAND="sed -i .bak "
 else
 	SEDCOMMAND="sed -i "
 fi
@@ -30,6 +30,7 @@ cat *_mqtt.yaml >> consolidated_mqtt.tmp
 rm -f *.yaml
 $SEDCOMMAND "s/MQTT_TOPIC/$MQTTTOPIC/g" consolidated_mqtt.tmp
 $SEDCOMMAND "s/ALTITUDEMEASUREMENT/$ALTITUDEMEASUREMENT/g" consolidated_mqtt.tmp
-$SEDCOMMAND "s/SENSOR_PREFIX/$SENSOR_PREFIX/g" consolidated_mqtt.tmp consolidated_automations.tmp
+$SEDCOMMAND "s/SENSOR_PREFIX/$SENSORPREFIX/g" consolidated_mqtt.tmp consolidated_automations.tmp
+rm -f *.bak
 mv consolidated_mqtt.tmp consolidated_mqtt.yaml
 mv consolidated_automations.tmp consolidated_automations.yaml
